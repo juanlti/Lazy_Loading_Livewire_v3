@@ -10,6 +10,10 @@ use App\Models\Tag;
 use Livewire\Component;
 
 
+// N2: OTRA FORMA DE REALZIAR LA CARGA LENTA
+//Observacioncion  de n2, siempre se ejecuta de manera lenta
+//#[Lazy]
+
 class Formulario extends Component
 {
 
@@ -91,7 +95,7 @@ class Formulario extends Component
 
 public function updated($property,$value){
     /// updated => ACTUALIZA LOS VALORES EN LA BD, MODIFICAR EL TIPO DE LETRAS, NO RECOMENDADO PARA  VALIDAR
-    dd($value);
+ //   dd($value);
 }
 public function hydrate(){
     // de back a front => hydrata el objecto
@@ -144,6 +148,27 @@ public function dehydrate(){
 
     }
 
+    public function placeholder(){
+      //  {{-- Iconos de loading para la carga lenta "lazy" --}}
+        //retorna codigo html mientras carga los datos, luego desaparec
+
+        // Loading N: 1 (html desde la clase)
+        /*
+        return <<<'HTML'
+                        <div  class="my-6 mx-6">
+                        <p>Cargando ...</p>
+                                    </div>
+
+                        HTML;
+    */
+        // Loading N: 2 (RECOMENDADO, de otra vista)
+        // SI QUEREMOS  QUE LA VISTA DE CARGAR SE UTILIZE EN TODO EL SISTEMA, LO CONFIGURAMOS
+        //app/config/livewire.php  y modificamos  'lazy_placeholder' => null, el null lo reemplazamos por la view livewire.placeholders.skeleton
+        //RECORDATORIO, SINO VEZ LA CARPETA DE LIVEWIRE, TIENES QUE PONERLA EN PUBLICO, COMANDO
+        //php artisan vendor:publish --tag=livewire:config
+        return view('livewire.placeholders.skeleton');
+
+    }
 
 
 
